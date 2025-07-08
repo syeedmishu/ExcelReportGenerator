@@ -1,0 +1,53 @@
+﻿using ExcelReportGenerator.Application.Interfaces;
+using ExcelReportGenerator.Core.Models;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using System.Data;
+
+namespace TestExcelGenerator.Controllers
+{
+    [Route("api/[controller]")]
+    [ApiController]
+    public class ReportController : ControllerBase
+    {
+        private readonly IReportGenerationService _reportService;
+
+        public ReportController(IReportGenerationService reportService)
+        {
+            _reportService = reportService;
+        }
+
+        [HttpGet("generate")]
+        public IActionResult GenerateReport()
+        {
+            var dt = GetSampleSalesData(); // your logic
+            var options = new ReportOptions { SheetName = "MyReport" };
+            var file = _reportService.Generate(dt, options);
+            return File(file, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "report.xlsx");
+        }
+
+
+        public static DataTable GetSampleSalesData()
+        {
+            var table = new DataTable("SalesReport");
+
+            // Define columns
+            table.Columns.Add("ProductId", typeof(int));
+            table.Columns.Add("ProductName", typeof(string));
+            table.Columns.Add("Category", typeof(string));
+            table.Columns.Add("UnitsSold", typeof(int));
+            table.Columns.Add("UnitPrice", typeof(decimal));
+            table.Columns.Add("TotalRevenue", typeof(decimal));
+
+            // Add sample rows
+            table.Rows.Add(1, "Laptop", "Electronics", 25, 800m, 20000m);
+            table.Rows.Add(2, "Smartphone", "Electronics", 40, 500m, 20000m);
+            table.Rows.Add(3, "Keyboard", "Accessories", 150, 20m, 3000m);
+            table.Rows.Add(4, "Desk Chair", "Furniture", 12, 150m, 1800m);
+            table.Rows.Add(5, "Monitor", "Electronics", 10, 300m, 3000m);
+            table.Rows.Add(6, "USB Hub", "Accessories", 90, 15m, 1350m);
+
+            return table;
+        }
+    }
+}
