@@ -1,6 +1,8 @@
-﻿using ExcelReportGenerator.Application.Interfaces;
+﻿using ClosedXML.Excel;
+using ExcelReportGenerator.Application.Interfaces;
 using ExcelReportGenerator.Core.Interfaces;
 using ExcelReportGenerator.Core.Models;
+using ExcelReportGenerator.Infrastructure.ClosedXml;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -33,5 +35,21 @@ namespace ExcelReportGenerator.Application.Services
         {
             return _generator.GenerateFromJson(json, options);
         }
+
+        public byte[] GenerateMultipleSheets(List<ReportSheetRequest> sheets)
+        {
+            using var workbook = new XLWorkbook();
+
+            foreach (var sheet in sheets)
+            {
+                var ws = workbook.Worksheets.Add(sheet.SheetName);
+                _generator.RenderTableWithOptions(ws, sheet.Table, sheet.Options);
+            }
+
+            using var stream = new MemoryStream();
+            workbook.SaveAs(stream);
+            return stream.ToArray();
+        }
+
     }
 }

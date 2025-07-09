@@ -13,5 +13,6 @@ namespace ExcelReportGenerator.Application.Interfaces
         byte[] Generate(DataTable table, ReportOptions options);
         byte[] Generate<T>(List<T> list, ReportOptions options);
         byte[] GenerateFromJson(string json, ReportOptions options);
+        byte[] GenerateMultipleSheets(List<ReportSheetRequest> sheets);
     }
 }

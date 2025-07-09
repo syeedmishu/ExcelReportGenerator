@@ -1,4 +1,5 @@
-﻿using ExcelReportGenerator.Core.Models;
+﻿using ClosedXML.Excel;
+using ExcelReportGenerator.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -13,5 +14,6 @@ namespace ExcelReportGenerator.Core.Interfaces
         byte[] GenerateFromDataTable(DataTable table, ReportOptions options);
         byte[] GenerateFromList<T>(List<T> list, ReportOptions options);
         byte[] GenerateFromJson(string json, ReportOptions options);
+        void RenderTableWithOptions(IXLWorksheet ws, DataTable dt, ReportOptions options);
     }
 }
