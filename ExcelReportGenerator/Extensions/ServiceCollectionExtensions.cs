@@ -12,6 +12,7 @@ namespace ExcelReportGenerator.Extensions
         {
             // Register the core Excel generator
             services.AddScoped<IExcelGenerator, ClosedXmlExcelGenerator>();
+            services.AddScoped<IMultiSheetExcelGenerator, ClosedXmlExcelGenerator>();
 
             // Register the report orchestration service
             services.AddScoped<IReportGenerationService, ReportGenerationService>();

@@ -9,11 +9,8 @@ using System.Threading.Tasks;
 
 namespace ExcelReportGenerator.Core.Interfaces
 {
-    public interface IExcelGenerator
+    public interface IMultiSheetExcelGenerator
     {
-        byte[] GenerateFromDataTable(DataTable table, ReportOptions options);
-        byte[] GenerateFromList<T>(List<T> list, ReportOptions options);
-        byte[] GenerateFromJson(string json, ReportOptions options);
-       
+        byte[] GenerateMultipleSheets(List<ReportSheetRequest> sheets);
     }
 }

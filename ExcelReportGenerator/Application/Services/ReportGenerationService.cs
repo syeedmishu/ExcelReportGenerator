@@ -15,10 +15,13 @@ namespace ExcelReportGenerator.Application.Services
     public class ReportGenerationService : IReportGenerationService
     {
         private readonly IExcelGenerator _generator;
+        private readonly IMultiSheetExcelGenerator _multiSheetGenerator;
 
-        public ReportGenerationService(IExcelGenerator generator)
+        public ReportGenerationService(IExcelGenerator generator
+            , IMultiSheetExcelGenerator multiSheetGenerator)
         {
             _generator = generator;
+            _multiSheetGenerator = multiSheetGenerator;
         }
 
         public byte[] Generate(DataTable table, ReportOptions options)
@@ -38,17 +41,7 @@ namespace ExcelReportGenerator.Application.Services
 
         public byte[] GenerateMultipleSheets(List<ReportSheetRequest> sheets)
         {
-            using var workbook = new XLWorkbook();
-
-            foreach (var sheet in sheets)
-            {
-                var ws = workbook.Worksheets.Add(sheet.SheetName);
-                _generator.RenderTableWithOptions(ws, sheet.Table, sheet.Options);
-            }
-
-            using var stream = new MemoryStream();
-            workbook.SaveAs(stream);
-            return stream.ToArray();
+            return _multiSheetGenerator.GenerateMultipleSheets(sheets);
         }
 
     }

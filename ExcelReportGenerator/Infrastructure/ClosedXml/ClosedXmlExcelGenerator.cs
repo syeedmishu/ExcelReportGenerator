@@ -6,116 +6,26 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace ExcelReportGenerator.Infrastructure.ClosedXml
 {
-    public class ClosedXmlExcelGenerator : IExcelGenerator
+    public class ClosedXmlExcelGenerator : IExcelGenerator, IMultiSheetExcelGenerator
     {
         public byte[] GenerateFromDataTable(DataTable dt, ReportOptions options)
         {
             using var wb = new XLWorkbook();
             var ws = wb.Worksheets.Add(options.SheetName ?? "Report");
 
-            int totalColumns = dt.Columns.Count;
-            int currentRow = 1;
-
-            // Add image
-            if (!string.IsNullOrWhiteSpace(options.ImagePath) && File.Exists(options.ImagePath))
-            {
-                using var imageStream = File.OpenRead(options.ImagePath);
-                var picture = ws.AddPicture(imageStream)
-                                 .WithSize(options.ImageWidth, options.ImageHeight);
-
-                int col = 1, row = 1;
-
-                if (options.ImagePosition == ImagePosition.Custom)
-                {
-                    row = options.CustomImageRow;
-                    col = options.CustomImageColumn;
-                }
-                else
-                {
-                    row = 1;
-                    switch (options.ImagePosition)
-                    {
-                        case ImagePosition.TopLeft:
-                            col = 1; break;
-                        case ImagePosition.TopCenter:
-                            col = (totalColumns / 2); break;
-                        case ImagePosition.TopRight:
-                            col = totalColumns - 1; break;
-                        case ImagePosition.Watermark:
-                            col = (totalColumns / 2);
-                            row = dt.Rows.Count / 2;
-                            break;
-                    }
-                }
-
-                picture.MoveTo(ws.Cell(row, col));
-                currentRow += 4;
-            }
-
-            // Title
-            if (!string.IsNullOrEmpty(options.Title))
-            {
-                var titleCell = ws.Cell(currentRow, 1);
-                titleCell.Value = options.Title;
-                titleCell.Style.Font.Bold = true;
-                titleCell.Style.Font.FontSize = 16;
-                titleCell.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
-                ws.Range(currentRow, 1, currentRow, totalColumns).Merge();
-                currentRow++;
-            }
-
-            // Subtitle
-            if (options.SubtitleLines != null)
-            {
-                foreach (var line in options.SubtitleLines)
-                {
-                    var subCell = ws.Cell(currentRow, 1);
-                    subCell.Value = line;
-                    subCell.Style.Font.Italic = true;
-                    subCell.Style.Font.FontSize = 11;
-                    subCell.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
-                    ws.Range(currentRow, 1, currentRow, totalColumns).Merge();
-                    currentRow++;
-                }
-            }
-
-            // Insert Table
-            var table = ws.Cell(currentRow, 1).InsertTable(dt);
-            StyleHeader(table, options);
-
-            if (options.AutoFilter)
-                table.ShowAutoFilter = true;
-
-            ws.Columns().AdjustToContents();
-
-            if (options.FreezeTopRow)
-                ws.SheetView.FreezeRows(currentRow);
-
-            ApplyConditionalFormatting(ws, currentRow, dt.Rows.Count, dt.Columns.Count, options);
-
-            // Footer
-            if (!string.IsNullOrWhiteSpace(options.FooterText))
-            {
-                int footerRow = currentRow + dt.Rows.Count + 2;
-                var footerCell = ws.Cell(footerRow, 1);
-                footerCell.Value = options.FooterText;
-                footerCell.Style.Font.Italic = true;
-                footerCell.Style.Font.FontSize = 10;
-                footerCell.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
-                ws.Range(footerRow, 1, footerRow, totalColumns).Merge();
-            }
+            RenderTableWithOptions(ws, dt, options);
 
             using var ms = new MemoryStream();
             wb.SaveAs(ms);
             return ms.ToArray();
         }
-
         public byte[] GenerateFromList<T>(List<T> list, ReportOptions options)
         {
             var dt = ToDataTable(list);
@@ -128,12 +38,27 @@ namespace ExcelReportGenerator.Infrastructure.ClosedXml
             return GenerateFromDataTable(dt, options);
         }
 
-        public void RenderTableWithOptions(IXLWorksheet ws, DataTable dt, ReportOptions options)
+        public byte[] GenerateMultipleSheets(List<ReportSheetRequest> sheets)
+        {
+            using var workbook = new XLWorkbook();
+
+            foreach (var sheet in sheets)
+            {
+                var ws = workbook.Worksheets.Add(sheet.SheetName);
+                RenderTableWithOptions(ws, sheet.Table, sheet.Options);
+            }
+
+            using var stream = new MemoryStream();
+            workbook.SaveAs(stream);
+            return stream.ToArray();
+        }
+
+        private void RenderTableWithOptions(IXLWorksheet ws, DataTable dt, ReportOptions options)
         {
             int totalColumns = dt.Columns.Count;
             int currentRow = 1;
 
-            // Image
+            // Add Image
             if (!string.IsNullOrWhiteSpace(options.ImagePath) && File.Exists(options.ImagePath))
             {
                 using var imageStream = File.OpenRead(options.ImagePath);
@@ -158,7 +83,6 @@ namespace ExcelReportGenerator.Infrastructure.ClosedXml
                         case ImagePosition.Watermark:
                             col = (totalColumns / 2);
                             row = dt.Rows.Count / 2;
-                            
                             break;
                     }
                 }
@@ -206,7 +130,7 @@ namespace ExcelReportGenerator.Infrastructure.ClosedXml
                 }
             }
 
-            // Table
+            // Insert table
             var table = ws.Cell(currentRow, 1).InsertTable(dt);
             var header = table.HeadersRow();
             header.Style.Font.Bold = true;
@@ -248,6 +172,8 @@ namespace ExcelReportGenerator.Infrastructure.ClosedXml
                 ws.Range(footerRow, 1, footerRow, totalColumns).Merge();
             }
         }
+
+   
 
         private void StyleHeader(IXLTable table, ReportOptions options)
         {
@@ -292,5 +218,7 @@ namespace ExcelReportGenerator.Infrastructure.ClosedXml
             }
             return dt;
         }
+
+      
     }
 }
