@@ -1,12 +1,11 @@
-﻿using ClosedXML.Excel;
-using ExcelReportGenerator.Application.Interfaces;
+﻿using ExcelReportGenerator.Application.Interfaces;
 using ExcelReportGenerator.Core.Interfaces;
 using ExcelReportGenerator.Core.Models;
-using ExcelReportGenerator.Infrastructure.ClosedXml;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 

@@ -1,9 +1,9 @@
 ﻿using ClosedXML.Excel;
 using ExcelReportGenerator.Application.Interfaces;
-using ExcelReportGenerator.Core.Builders;
 using ExcelReportGenerator.Core.Enum;
 using ExcelReportGenerator.Core.Models;
-using ExcelReportGenerator.Core.Presets;
+using ExcelReportGenerator.Extensions.Builder;
+using ExcelReportGenerator.Extensions.Presets;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Data;
@@ -54,7 +54,7 @@ namespace TestExcelGenerator.Controllers
                 new() { SheetName = "HR", Table = dt2, Options = options2 }
             });
 
- 
+
             return File(file, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "report.xlsx");
         }
 

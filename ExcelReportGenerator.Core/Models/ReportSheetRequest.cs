@@ -13,5 +13,4 @@ namespace ExcelReportGenerator.Core.Models
         public DataTable Table { get; set; }
         public ReportOptions Options { get; set; } = new();
     }
-
 }

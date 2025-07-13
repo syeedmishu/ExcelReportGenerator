@@ -5,8 +5,8 @@ using ExcelReportGenerator.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Drawing;
 using System.Linq;
-using System.Reflection.Emit;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -173,7 +173,7 @@ namespace ExcelReportGenerator.Infrastructure.ClosedXml
             }
         }
 
-   
+
 
         private void StyleHeader(IXLTable table, ReportOptions options)
         {
@@ -219,6 +219,6 @@ namespace ExcelReportGenerator.Infrastructure.ClosedXml
             return dt;
         }
 
-      
+
     }
 }

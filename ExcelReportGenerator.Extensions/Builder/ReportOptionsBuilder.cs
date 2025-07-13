@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ExcelReportGenerator.Core.Builders
+namespace ExcelReportGenerator.Extensions.Builder
 {
     public class ReportOptionsBuilder
     {

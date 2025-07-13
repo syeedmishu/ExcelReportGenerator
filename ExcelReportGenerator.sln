@@ -1,0 +1,55 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34330.188
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExcelReportGenerator.Application", "ExcelReportGenerator\ExcelReportGenerator.Application.csproj", "{74210E98-4F0D-4AA2-A650-CFFF1E45786A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExcelReportGenerator.Core", "ExcelReportGenerator.Core\ExcelReportGenerator.Core.csproj", "{3648AFD4-63A8-4F71-81BE-F6F5C8496FB0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExcelReportGenerator.Extensions", "ExcelReportGenerator.Extensions\ExcelReportGenerator.Extensions.csproj", "{D0E2F624-F6FC-404C-A5D9-EA407B4DB0D8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExcelReportGenerator.Infrastructure", "ExcelReportGenerator.Infrastructure\ExcelReportGenerator.Infrastructure.csproj", "{E02C2F49-2CCA-4252-A859-343C6E469E75}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExcelReportGenerator.DependencyInjection", "ExcelReportGenerator.DependencyInjection\ExcelReportGenerator.DependencyInjection.csproj", "{C698683B-F45D-4EDA-BABB-A0AFAF69346D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestExcelGenerator", "TestExcelGenerator\TestExcelGenerator.csproj", "{C9C6601B-9346-4816-8515-BA47C96764F8}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{74210E98-4F0D-4AA2-A650-CFFF1E45786A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{74210E98-4F0D-4AA2-A650-CFFF1E45786A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{74210E98-4F0D-4AA2-A650-CFFF1E45786A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{74210E98-4F0D-4AA2-A650-CFFF1E45786A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3648AFD4-63A8-4F71-81BE-F6F5C8496FB0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3648AFD4-63A8-4F71-81BE-F6F5C8496FB0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3648AFD4-63A8-4F71-81BE-F6F5C8496FB0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3648AFD4-63A8-4F71-81BE-F6F5C8496FB0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D0E2F624-F6FC-404C-A5D9-EA407B4DB0D8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D0E2F624-F6FC-404C-A5D9-EA407B4DB0D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D0E2F624-F6FC-404C-A5D9-EA407B4DB0D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D0E2F624-F6FC-404C-A5D9-EA407B4DB0D8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E02C2F49-2CCA-4252-A859-343C6E469E75}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E02C2F49-2CCA-4252-A859-343C6E469E75}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E02C2F49-2CCA-4252-A859-343C6E469E75}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E02C2F49-2CCA-4252-A859-343C6E469E75}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C698683B-F45D-4EDA-BABB-A0AFAF69346D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C698683B-F45D-4EDA-BABB-A0AFAF69346D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C698683B-F45D-4EDA-BABB-A0AFAF69346D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C698683B-F45D-4EDA-BABB-A0AFAF69346D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C9C6601B-9346-4816-8515-BA47C96764F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C9C6601B-9346-4816-8515-BA47C96764F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C9C6601B-9346-4816-8515-BA47C96764F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C9C6601B-9346-4816-8515-BA47C96764F8}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {DC08F74F-4E6C-4313-AD97-C78C290706CC}
+	EndGlobalSection
+EndGlobal
